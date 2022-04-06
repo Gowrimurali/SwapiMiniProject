@@ -9,10 +9,11 @@ import java.net.http.HttpResponse;
 public class ConnectionManager {
     private static final String BASEURL = "https://swapi.dev/api/people/";
     private static String endPoint;
+    private static HttpResponse httpResponse;
     
 
     public static String getConnection() {
-        getResponse();
+        getResponse(1);
         return BASEURL;
     }
 
@@ -21,11 +22,11 @@ public class ConnectionManager {
     }
 
     public static int getStatusCode() {
-        return getResponse().statusCode();
+        return getResponse(1).statusCode();
     }
-    private static HttpResponse<String> getResponse() {
+    private static HttpResponse<String> getResponse(int number) {
         HttpClient httpClient = HttpClient.newHttpClient();
-        HttpRequest httpRequest = HttpRequest.newBuilder().uri(URI.create(BASEURL + endPoint)).build();
+        HttpRequest httpRequest = HttpRequest.newBuilder().uri(URI.create(getConnection(number))).build();
         HttpResponse<String> httpResponse = null;
         try {
             httpResponse = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
@@ -34,6 +35,11 @@ public class ConnectionManager {
         }
         return httpResponse;
     }
+
+    public static HttpResponse<String> getConnectionResponse(int number) {
+        return getResponse(number);
+    }
+
     public String getURL() {
         return BASEURL + endPoint;
     }

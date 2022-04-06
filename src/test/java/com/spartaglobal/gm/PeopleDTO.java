@@ -140,7 +140,7 @@ public class PeopleDTO{
 	}
 
 	public boolean checkIfNull(String value){
-		return value==null;
+		return value.equals(null);
 	}
 
 	public boolean checkIfEmpty(String value){
@@ -354,8 +354,6 @@ public class PeopleDTO{
 		}
 		return true;
 	}
-
-
 
 
 }

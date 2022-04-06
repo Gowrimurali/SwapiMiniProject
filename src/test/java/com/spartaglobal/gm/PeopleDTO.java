@@ -303,57 +303,23 @@ public class PeopleDTO{
 		HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url)).build();
 		HttpResponse<String> response = null;
 		try {
-			response= client.send(request, HttpResponse.BodyHandlers.ofString());
+			response = client.send(request, HttpResponse.BodyHandlers.ofString());
 		} catch (IOException | InterruptedException e) {
 			e.printStackTrace();
 		}
 		return response.statusCode();
 	}
 
-	public boolean checkIfArray(String array){
-		if(array.length()>0) {
-			char[] charArray = array.toCharArray();
-			if (charArray[0]=='[' && charArray[charArray.length - 1] == ']') {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	public boolean checkIfURLsAreValidInArray(String array){
-		String[] urlArray = array.split(",");
-		if(urlArray.length ==1){
-			char[] charArray = urlArray[0].toCharArray();
-			String url = null;
-			for(int j = 1; j<charArray.length-1; j++){
-				url = url + charArray[j];
-			}
-			return checkIfURLIsValid(url);
-		}
-		for(int i = 0; i<urlArray.length; i++){
-			if(i==0){
-				char[] charArray = urlArray[0].toCharArray();
-				String url = null;
-				for(int j = 1; j<charArray.length; j++){
-					url = url + charArray[j];
+	public boolean checkIfURLsAreValidInArray(List<String> array){
+		if (array == null) {
+			return false;
+		} else {
+			for (int i = 0; i < array.size(); i++) {
+				if (checkIfURLIsValid(array.get(i)) == false) {
+					return false;
 				}
-			}else if(i==urlArray.length-1){
-				char[] charArray = urlArray[i].toCharArray();
-				String url = null;
-				for(int j = 0; j<charArray.length-1; j++){
-					url = url + charArray[j];
-				}
-			}else{
-				String url = urlArray[i];
-				checkIfURLIsValid(url);
-
 			}
-			if(!checkIfURLIsValid(url)){
-				return false;
-			}
+			return true;
 		}
-		return true;
 	}
-
-
 }

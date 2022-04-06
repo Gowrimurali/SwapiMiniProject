@@ -275,6 +275,10 @@ public class PeopleDTO{
 		return firstNumbers;
 	}
 
+	public boolean checkIfDateIsValid(){
+		return getBirthYear().matches("\\d{1,3}[A-Z]{3}");
+	}
+
 	public boolean checkIfGenderIsValid(){
 		String[] validGenders = {"male", "female", "unknown", "n/a"};
 		for(String genders : validGenders) {
@@ -305,4 +309,53 @@ public class PeopleDTO{
 		}
 		return response.statusCode();
 	}
+
+	public boolean checkIfArray(String array){
+		if(array.length()>0) {
+			char[] charArray = array.toCharArray();
+			if (charArray[0]=='[' && charArray[charArray.length - 1] == ']') {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean checkIfURLsAreValidInArray(String array){
+		String[] urlArray = array.split(",");
+		if(urlArray.length ==1){
+			char[] charArray = urlArray[0].toCharArray();
+			String url = null;
+			for(int j = 1; j<charArray.length-1; j++){
+				url = url + charArray[j];
+			}
+			return checkIfURLIsValid(url);
+		}
+		for(int i = 0; i<urlArray.length; i++){
+			if(i==0){
+				char[] charArray = urlArray[0].toCharArray();
+				String url = null;
+				for(int j = 1; j<charArray.length; j++){
+					url = url + charArray[j];
+				}
+			}else if(i==urlArray.length-1){
+				char[] charArray = urlArray[i].toCharArray();
+				String url = null;
+				for(int j = 0; j<charArray.length-1; j++){
+					url = url + charArray[j];
+				}
+			}else{
+				String url = urlArray[i];
+				checkIfURLIsValid(url);
+
+			}
+			if(!checkIfURLIsValid(url)){
+				return false;
+			}
+		}
+		return true;
+	}
+
+
+
+
 }

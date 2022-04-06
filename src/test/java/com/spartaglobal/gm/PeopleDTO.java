@@ -5,6 +5,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -260,22 +261,23 @@ public class PeopleDTO{
 
 	public String getLastThreeCharactersOfDOB() {
 		char[] birthYearArray = birthYear.toCharArray();
-		String lastChars = null;
-		lastChars = String.valueOf(birthYearArray[birthYear.length() - 3] + birthYearArray[birthYear.length() - 2] + birthYearArray[birthYear.length() - 1]);
-		return lastChars;
+		StringBuilder lastChars = null;
+		lastChars = new StringBuilder().append(birthYearArray[birthYear.length() - 3]).append(birthYearArray[birthYear.length() - 2]).append(birthYearArray[birthYear.length() - 1]);
+		return lastChars.toString();
 	}
 
 	public double getFirstNumbersOfDOB(){
 		char[] birthYearArray = birthYear.toCharArray();
-		String firstPart= null;
+		StringBuilder firstPart= new StringBuilder();
 		for (int i =0;  i < birthYearArray.length-3; i++){
-			firstPart = firstPart + birthYearArray[i];
+			firstPart = firstPart.append(birthYearArray[i]);
 		}
-		Double firstNumbers = Double.parseDouble(firstPart);
+		Double firstNumbers = Double.parseDouble(firstPart.toString());
 		return firstNumbers;
 	}
 
 	public boolean checkIfDateIsValid(){
+
 		return getBirthYear().matches("\\d{1,3}[A-Z]{3}");
 	}
 
@@ -310,45 +312,13 @@ public class PeopleDTO{
 		return response.statusCode();
 	}
 
-	public boolean checkIfArray(String array){
-		if(array.length()>0) {
-			char[] charArray = array.toCharArray();
-			if (charArray[0]=='[' && charArray[charArray.length - 1] == ']') {
-				return true;
-			}
-		}
-		return false;
+	public boolean checkIfArray(List<String> array){
+		return ArrayList.class.toString().equals(array.getClass().toString());
 	}
 
-	public boolean checkIfURLsAreValidInArray(String array){
-		String[] urlArray = array.split(",");
-		if(urlArray.length ==1){
-			char[] charArray = urlArray[0].toCharArray();
-			String url = null;
-			for(int j = 1; j<charArray.length-1; j++){
-				url = url + charArray[j];
-			}
-			return checkIfURLIsValid(url);
-		}
-		for(int i = 0; i<urlArray.length; i++){
-			if(i==0){
-				char[] charArray = urlArray[0].toCharArray();
-				String url = null;
-				for(int j = 1; j<charArray.length; j++){
-					url = url + charArray[j];
-				}
-			}else if(i==urlArray.length-1){
-				char[] charArray = urlArray[i].toCharArray();
-				String url = null;
-				for(int j = 0; j<charArray.length-1; j++){
-					url = url + charArray[j];
-				}
-			}else{
-				String url = urlArray[i];
-				checkIfURLIsValid(url);
-
-			}
-			if(!checkIfURLIsValid(url)){
+	public boolean checkIfURLsAreValidInArray(List<String> array){
+		for (String url : array){
+			if(checkStatusCodeOfURL(url) != 200){
 				return false;
 			}
 		}

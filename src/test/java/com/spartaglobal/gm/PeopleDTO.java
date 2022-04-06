@@ -6,6 +6,9 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class PeopleDTO{
@@ -120,6 +123,20 @@ public class PeopleDTO{
 
 	public String getHeight(){
 		return height;
+	}
+
+	public boolean checkCreateFormat() {
+		String regex = "\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}.\\d{6}Z";
+		Pattern p = Pattern.compile(regex);
+		Matcher m = p.matcher(getCreated());
+		return m.matches();
+	}
+
+	public boolean checkEditedFormat() {
+		String regex = "\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}.\\d{6}Z";
+		Pattern p = Pattern.compile(regex);
+		Matcher m = p.matcher(getEdited());
+		return m.matches();
 	}
 
 	public boolean checkIfNull(String value){

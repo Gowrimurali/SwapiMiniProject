@@ -312,7 +312,7 @@ public class PeopleDTO{
 		return response.statusCode();
 	}
 
-	public boolean checkIfURLsAreValidInArray(List<String> array){
+	public boolean checkIfURLsAreValidInArray(List<String> array) {
 		if (array == null) {
 			return false;
 		} else {
@@ -320,17 +320,12 @@ public class PeopleDTO{
 				if (checkIfURLIsValid(array.get(i)) == false) {
 					return false;
 				}
+			}
+		}
+		return true;
+	}
 	public boolean checkIfArray(List<String> array){
 		return ArrayList.class.toString().equals(array.getClass().toString());
 	}
 
-	public boolean checkIfURLsAreValidInArray(List<String> array){
-		for (String url : array){
-			if(checkStatusCodeOfURL(url) != 200){
-				return false;
-
-			}
-			return true;
-		}
-	}
 }

@@ -52,7 +52,7 @@ public class AppTest{
     }
     @Nested
     @DisplayName("Check Format ")
-    class Format{
+    class Format {
         @Test
         @DisplayName("Check if Create Format is correct")
         void checkIfCreateFormatIsCorrect() {
@@ -74,7 +74,7 @@ public class AppTest{
         @Test
         @DisplayName("Get First 3 chars of DOB and check if greater than zero")
         void getFirst3CharsOfDob() {
-            Assertions.assertTrue(peopleDTO.getFirstNumbersOfDOB()>0);
+            Assertions.assertTrue(peopleDTO.getFirstNumbersOfDOB() > 0);
         }
 
         @Test
@@ -105,17 +105,19 @@ public class AppTest{
         @DisplayName("Check if URLs Are Valid")
         void checkIfUrLsAreValid() {
             Assertions.assertTrue(peopleDTO.checkIfURLsAreValidInArray(peopleDTO.getFilms()));
-
-        @DisplayName("Check if a field is array")
-        void checkIfAFieldIsArray() {
-            Assertions.assertTrue(peopleDTO.checkIfArray(peopleDTO.getFilms()));
         }
+            @Test
+            @DisplayName("Check if a field is array")
+            void checkIfAFieldIsArray () {
+                Assertions.assertTrue(peopleDTO.checkIfArray(peopleDTO.getFilms()));
+            }
 
-        @Test
-        @DisplayName("Check if the urls in array is valid")
-        void checkIfTheUrlsInArrayIsValid() {
-            Assertions.assertTrue(peopleDTO.checkIfURLsAreValidInArray(peopleDTO.getVehicles()));
+            @Test
+            @DisplayName("Check if the urls in array is valid")
+            void checkIfTheUrlsInArrayIsValid () {
+                Assertions.assertTrue(peopleDTO.checkIfURLsAreValidInArray(peopleDTO.getVehicles()));
 
+            }
         }
     }
-}
+

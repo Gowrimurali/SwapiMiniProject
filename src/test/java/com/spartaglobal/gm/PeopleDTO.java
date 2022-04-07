@@ -5,6 +5,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -260,22 +261,23 @@ public class PeopleDTO{
 
 	public String getLastThreeCharactersOfDOB() {
 		char[] birthYearArray = birthYear.toCharArray();
-		String lastChars = null;
-		lastChars = String.valueOf(birthYearArray[birthYear.length() - 3] + birthYearArray[birthYear.length() - 2] + birthYearArray[birthYear.length() - 1]);
-		return lastChars;
+		StringBuilder lastChars = null;
+		lastChars = new StringBuilder().append(birthYearArray[birthYear.length() - 3]).append(birthYearArray[birthYear.length() - 2]).append(birthYearArray[birthYear.length() - 1]);
+		return lastChars.toString();
 	}
 
 	public double getFirstNumbersOfDOB(){
 		char[] birthYearArray = birthYear.toCharArray();
-		String firstPart= null;
+		StringBuilder firstPart= new StringBuilder();
 		for (int i =0;  i < birthYearArray.length-3; i++){
-			firstPart = firstPart + birthYearArray[i];
+			firstPart = firstPart.append(birthYearArray[i]);
 		}
-		Double firstNumbers = Double.parseDouble(firstPart);
+		Double firstNumbers = Double.parseDouble(firstPart.toString());
 		return firstNumbers;
 	}
 
 	public boolean checkIfDateIsValid(){
+
 		return getBirthYear().matches("\\d{1,3}[A-Z]{3}");
 	}
 
@@ -318,6 +320,15 @@ public class PeopleDTO{
 				if (checkIfURLIsValid(array.get(i)) == false) {
 					return false;
 				}
+	public boolean checkIfArray(List<String> array){
+		return ArrayList.class.toString().equals(array.getClass().toString());
+	}
+
+	public boolean checkIfURLsAreValidInArray(List<String> array){
+		for (String url : array){
+			if(checkStatusCodeOfURL(url) != 200){
+				return false;
+
 			}
 			return true;
 		}

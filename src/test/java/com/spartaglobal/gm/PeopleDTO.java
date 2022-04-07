@@ -305,13 +305,21 @@ public class PeopleDTO{
 		HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url)).build();
 		HttpResponse<String> response = null;
 		try {
-			response= client.send(request, HttpResponse.BodyHandlers.ofString());
+			response = client.send(request, HttpResponse.BodyHandlers.ofString());
 		} catch (IOException | InterruptedException e) {
 			e.printStackTrace();
 		}
 		return response.statusCode();
 	}
 
+	public boolean checkIfURLsAreValidInArray(List<String> array){
+		if (array == null) {
+			return false;
+		} else {
+			for (int i = 0; i < array.size(); i++) {
+				if (checkIfURLIsValid(array.get(i)) == false) {
+					return false;
+				}
 	public boolean checkIfArray(List<String> array){
 		return ArrayList.class.toString().equals(array.getClass().toString());
 	}
@@ -320,10 +328,9 @@ public class PeopleDTO{
 		for (String url : array){
 			if(checkStatusCodeOfURL(url) != 200){
 				return false;
+
 			}
+			return true;
 		}
-		return true;
 	}
-
-
 }

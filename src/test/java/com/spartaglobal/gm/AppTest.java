@@ -1,6 +1,8 @@
 package com.spartaglobal.gm;
 import org.junit.jupiter.api.*;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 public class AppTest{
     private static PeopleDTO peopleDTO;
@@ -17,7 +19,6 @@ public class AppTest{
         @Test
         @DisplayName("Check String isNotNull & IsNotEqualToZero")
         void testName() {
-            System.out.println(peopleDTO.getEyeColor());
             Assertions.assertFalse(peopleDTO.isNameNull());
         }
 
@@ -89,6 +90,22 @@ public class AppTest{
         }
 
         @Test
+        @DisplayName("Test status code works ")
+        void testStatusCodeWorks() {
+            Assertions.assertEquals(200, peopleDTO.checkStatusCodeOfURL(ConnectionManager.getConnection(1)));
+        }
+
+        @Test
+        @DisplayName("Check if URL is Valid")
+        void checkIfUrlIsValid() {
+            Assertions.assertTrue(peopleDTO.checkIfURLIsValid(peopleDTO.getHomeworld()));
+        }
+
+        @Test
+        @DisplayName("Check if URLs Are Valid")
+        void checkIfUrLsAreValid() {
+            Assertions.assertTrue(peopleDTO.checkIfURLsAreValidInArray(peopleDTO.getFilms()));
+
         @DisplayName("Check if a field is array")
         void checkIfAFieldIsArray() {
             Assertions.assertTrue(peopleDTO.checkIfArray(peopleDTO.getFilms()));
@@ -98,6 +115,7 @@ public class AppTest{
         @DisplayName("Check if the urls in array is valid")
         void checkIfTheUrlsInArrayIsValid() {
             Assertions.assertTrue(peopleDTO.checkIfURLsAreValidInArray(peopleDTO.getVehicles()));
+
         }
     }
 }
